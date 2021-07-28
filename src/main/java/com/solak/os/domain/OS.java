@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.solak.os.domain.enuns.Prioridade;
@@ -20,34 +19,33 @@ public class OS {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataAbertura;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataFechamento;
-	
+
 	private Integer prioridade;
 	private String observacoes;
 	private Integer status;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
 	public OS() {
 		super();
-		this.setDataAbertura(LocalDateTime.now());  // para setar data na criação do objeto
+		this.setDataAbertura(LocalDateTime.now());
 		this.setPrioridade(Prioridade.BAIXA);
 		this.setStatus(Status.ABERTO);
 	}
 
-	public OS(Integer id, LocalDateTime dataAbertura, Prioridade prioridade,
-			String observacoes, Status status, Tecnico tecnico, Cliente cliente) {
+	public OS(Integer id, Prioridade prioridade, String observacoes, Status status, Tecnico tecnico, Cliente cliente) {
 		super();
 		this.id = id;
 		this.setDataAbertura(LocalDateTime.now());
