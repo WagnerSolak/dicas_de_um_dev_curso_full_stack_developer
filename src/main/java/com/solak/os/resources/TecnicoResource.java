@@ -1,7 +1,6 @@
 package com.solak.os.resources;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,7 +63,7 @@ public class TecnicoResource {
 		Tecnico newObj = service.create(objDTO);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(newObj.getId()).toUri(); // {id}: pegar id do novo obj e coloca na url e retorna
+				.buildAndExpand(newObj.getId()).toUri(); // {id}: pegar id do novo obj e coloca na url e retorna no Headers do postman
 		return ResponseEntity.created(uri).build();
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.solak.os.domain.Tecnico;
 import com.solak.os.dtos.TecnicoDTO;
 import com.solak.os.repositories.TecnicoRepository;
+import com.solak.os.services.exceptions.DataIntegratyViolationException;
 import com.solak.os.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -29,8 +30,19 @@ public class TecnicoService {
 	}
 	
 	public Tecnico create(TecnicoDTO objDTO) {
+		if(findByCPF(objDTO) != null) {
+			throw new DataIntegratyViolationException("CPF já cadastrado na base de dados!");
+		}
 		//Tecnico newObj = new Tecnico(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getTelefone());
 		//return repository.save(newObj);
 		return repository.save(new Tecnico(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getTelefone()));
+	}
+	
+	private Tecnico findByCPF(TecnicoDTO objDTO) {
+		Tecnico obj = repository.findByCPF(objDTO.getCpf());
+		if(obj != null) {
+			return obj;
+		}
+		return null;
 	}
 }
