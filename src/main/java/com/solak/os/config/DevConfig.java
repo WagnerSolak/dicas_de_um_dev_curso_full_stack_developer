@@ -1,6 +1,7 @@
 package com.solak.os.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -8,15 +9,21 @@ import org.springframework.context.annotation.Profile;
 import com.solak.os.services.DBService;
 
 @Configuration
-@Profile("test")
-public class TesteConfig {
+@Profile("dev")
+public class DevConfig {
 
 	@Autowired
 	private DBService dbService;
+	
+	@Value("${spring.jpa.hibernate.ddl-auto}")
+	private String ddl;
 
-	@Bean // quando profile test estiver atio, ele verifica o método Bean e executa o metodo, que nele possui uma instancia do dbService que instanciará os objetos da classe chamada DBService
-	public void instanciaDB() {
-		this.dbService.instanciaDB();
+	@Bean 
+	public boolean instanciaDB() {
+		if(ddl.equals("create")) {
+			this.dbService.instanciaDB();
+		}
+		return false;
 	}
 
 }
