@@ -1,4 +1,4 @@
-package com.solak.os.services.exceptions;
+package com.solak.os.resources.exception;
 
 import java.io.Serializable;
 
