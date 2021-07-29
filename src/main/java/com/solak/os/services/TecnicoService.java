@@ -8,8 +8,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.solak.os.domain.Pessoa;
 import com.solak.os.domain.Tecnico;
 import com.solak.os.dtos.TecnicoDTO;
+import com.solak.os.repositories.PessoaRepository;
 import com.solak.os.repositories.TecnicoRepository;
 import com.solak.os.services.exceptions.DataIntegratyViolationException;
 import com.solak.os.services.exceptions.ObjectNotFoundException;
@@ -19,6 +21,9 @@ public class TecnicoService {
 
 	@Autowired
 	private TecnicoRepository repository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = repository.findById(id); // buscou e verificou se existe ou nao atraves do Optional
@@ -40,8 +45,11 @@ public class TecnicoService {
 		return repository.save(new Tecnico(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getTelefone()));
 	}
 	
-	private Tecnico findByCPF(TecnicoDTO objDTO) {
-		Tecnico obj = repository.findByCPF(objDTO.getCpf());
+	// private Tecnico findByCPF(TecnicoDTO objDTO) {
+	// alterado Tecnico por Pessoa pois na regra atual ele deixaria criar um cf para um tecnico ou cliente
+	private Pessoa findByCPF(TecnicoDTO objDTO) {
+		Pessoa obj = pessoaRepository.findByCPF(objDTO.getCpf());
+		
 		if(obj != null) {
 			return obj;
 		}
