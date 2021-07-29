@@ -67,5 +67,12 @@ public class TecnicoDTO implements Serializable {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	
+	/*
+	 * DTO - Objeto de Trasferência de dados Padrão de projeto de software, usado
+	 * para trasferir dados entre sistema de software. Obter dados de um banco de
+	 * dados, conseguindo omitir algumas informações utilizando o padrão DTO. Ex.:
+	 * paginação onde trás objetos por vez, omitindo algumas informações.
+	 */
 
 }
