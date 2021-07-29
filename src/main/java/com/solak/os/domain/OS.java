@@ -1,5 +1,6 @@
 package com.solak.os.domain;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -14,7 +15,9 @@ import com.solak.os.domain.enuns.Prioridade;
 import com.solak.os.domain.enuns.Status;
 
 @Entity
-public class OS {
+public class OS implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

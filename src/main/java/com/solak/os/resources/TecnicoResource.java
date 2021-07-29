@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.solak.os.domain.Tecnico;
+
+import com.solak.os.dtos.TecnicoDTO;
 import com.solak.os.services.TecnicoService;
 
 @RestController
@@ -20,9 +21,17 @@ public class TecnicoResource {
 	// para acessar: localhost:8080/tecnicos
 	
 	@GetMapping(value = "/{id}") // {id} variável de path
-	public ResponseEntity<Tecnico> findById(@PathVariable Integer id){
-		Tecnico obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<TecnicoDTO> findById(@PathVariable Integer id){
+	//  Tecnico obj = service.findById(id);
+	//	TecnicoDTO objDTO = new TecnicoDTO(obj); // conversao do Tecnico em TecnicoDTO (boas práticas)
+		TecnicoDTO objDTO = new TecnicoDTO(service.findById(id));
+		return ResponseEntity.ok().body(objDTO);
 	}
-
+	
+	// na criação inicial estávamos retornando a entidade <Tecnico>:  
+	// @GetMapping(value = "/{id}") // {id} variável de path
+	// public ResponseEntity<Tecnico> findById(@PathVariable Integer id){
+	//		Tecnico obj = service.findById(id);
+	//		return ResponseEntity.ok().body(obj);
+	
 }
