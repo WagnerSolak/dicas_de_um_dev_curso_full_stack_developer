@@ -1,5 +1,6 @@
 package com.solak.os.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,11 @@ public class OsService {
 		return fromDTO(obj);
 	}
 	
+	public OS update(@Valid OSDTO obj) {
+		findById(obj.getId());
+		return fromDTO(obj); // fromDTO recebe um Obj de Transf. e instancia uma nova OS 
+	}
+	
 	private OS fromDTO(OSDTO obj) {
 		OS newObj = new OS();
 		newObj.setId(obj.getId());
@@ -54,9 +60,15 @@ public class OsService {
 		Tecnico tec = tecnicoService.findById(obj.getTecnico());
 		Cliente cli = clienteService.findById(obj.getCliente());
 		
+		if(newObj.getStatus().getCod().equals(2)) {
+			newObj.setDataFechamento(LocalDateTime.now());
+		}
+		
 		newObj.setTecnico(tec);
 		newObj.setCliente(cli);
 		
 		return repository.save(newObj);
 	}
+
+	
 }
